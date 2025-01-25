@@ -7,8 +7,10 @@ import { ConnectionProvider, WalletProvider, useWallet } from "@solana/wallet-ad
 import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 
+const TOKEN_MINT_ADDRESS = "H2oFKYcWq5PgdFFjoBHjkSMJfoSzMh9Qf8DfbbJpump";
+
 const WalletApp = () => {
-    const [network, setNetwork] = useState(WalletAdapterNetwork.Mainnet);
+    const [network] = useState(WalletAdapterNetwork.Mainnet);
     const endpoint = clusterApiUrl(network);
     const wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter()];
 
@@ -29,7 +31,7 @@ const WalletInterface = () => {
         if (!publicKey) return;
 
         const connection = new Connection(clusterApiUrl(WalletAdapterNetwork.Mainnet));
-        const tokenMintAddress = new PublicKey("H2oFKYcWq5PgdFFjoBHjkSMJfoSzMh9Qf8DfbbJpump");  // CA DI SOLETF
+        const tokenMintAddress = new PublicKey(TOKEN_MINT_ADDRESS);
         const tokenAccounts = await connection.getTokenAccountsByOwner(publicKey, {
             mint: tokenMintAddress,
         });
@@ -45,7 +47,7 @@ const WalletInterface = () => {
 
     const handleBuyCrypto = () => {
         window.open(
-            `https://buy.ramp.network/?swapAsset=YOUR_TOKEN_SYMBOL&userAddress=${publicKey}`,
+            `https://buy.ramp.network/?swapAsset=H2oFKYc&userAddress=${publicKey}`,
             "_blank"
         );
     };
